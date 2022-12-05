@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace FinalProject.Controllers;
 
 using System.Net;
 using Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Models;
 using Persistence;
@@ -114,6 +113,15 @@ public class RecipesController : ControllerBase
             {
                 StatusCode = HttpStatusCode.NotFound,
                 StatusDescription = $"Recipe '{id}' does not exist."
+            });
+        }
+        
+        if (await _context.Recipes.AnyAsync(r => r.Name == dto.Name))
+        {
+            return Conflict(new Response
+            {
+                StatusCode = HttpStatusCode.Conflict,
+                StatusDescription = $"Recipe '{recipe.Name}' already exists."
             });
         }
 
