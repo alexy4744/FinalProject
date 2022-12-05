@@ -102,7 +102,7 @@ public class RecipesController : ControllerBase
         });
     }
 
-    [HttpPatch("{id:int}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult<Response<Recipe>>> UpdateRecipe(int id, Recipe dto)
     {
         var recipe = await _context.Recipes.FindAsync(id);
